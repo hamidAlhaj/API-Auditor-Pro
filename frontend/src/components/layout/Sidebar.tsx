@@ -34,7 +34,8 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar-content">
+      {" "}
       <h2
         style={{
           display: "flex",
@@ -45,7 +46,6 @@ export default function Sidebar() {
       >
         <Shield size={28} color="var(--btn-primary-bg)" /> {t("app_name")}
       </h2>
-
       <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <Globe size={20} /> {t("env_title")}
       </h3>
@@ -64,7 +64,6 @@ export default function Sidebar() {
       <button onClick={handleSave} disabled={saving}>
         {saving ? "..." : saved ? "✅" : t("save_env")}
       </button>
-
       <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <Lock size={20} /> {t("auth_title")}
       </h3>

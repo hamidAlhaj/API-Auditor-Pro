@@ -14,7 +14,7 @@ export default function TopBar({ onMenuClick }: Props) {
 
   return (
     <div className="top-bar">
-      {/* زر القائمة يظهر فقط في الشاشات الصغيرة عبر CSS */}
+      {/* زر القائمة (يظهر ويختفي بناءً على ملف الـ CSS الخاص بك) */}
       <button onClick={onMenuClick} className="mobile-menu-btn">
         <Menu size={28} />
       </button>
