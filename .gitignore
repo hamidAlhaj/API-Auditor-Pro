@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.pyc
+.env
+static/dist/
+data/logs/*.log
+temp_*.pdf
+node_modules/
+frontend/node_modules/
+.vscode/
+.idea/
+*.local
+dist/
