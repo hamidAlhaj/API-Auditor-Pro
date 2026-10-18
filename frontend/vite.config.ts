@@ -3,9 +3,10 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === "build" ? "/static/dist/" : "/",
+  // تم التعديل هنا ليتوافق مع GitHub Pages
+  base: command === "build" ? "/API-Auditor-Pro/" : "/",
   build: {
-    outDir: "dist", // غيرناها إلى dist لأننا سننشر الفرونت إند لوحده
+    outDir: "dist", // صحيح، لنشر الفرونت إند لوحده
     emptyOutDir: true,
     rollupOptions: {
       output: {

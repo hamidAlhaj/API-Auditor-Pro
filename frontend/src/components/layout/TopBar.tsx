@@ -14,23 +14,10 @@ export default function TopBar({ onMenuClick }: Props) {
 
   return (
     <div className="top-bar">
-      {/* زر القائمة يظهر فقط في الشاشات الصغيرة */}
-      <button
-        onClick={onMenuClick}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          background: "transparent",
-          border: "none",
-          color: "var(--text-primary)",
-          cursor: "pointer",
-        }}
-        className="mobile-menu-btn"
-      >
+      {/* زر القائمة يظهر فقط في الشاشات الصغيرة عبر CSS */}
+      <button onClick={onMenuClick} className="mobile-menu-btn">
         <Menu size={28} />
       </button>
-
-      <style>{`.mobile-menu-btn { display: none !important; } @media (max-width: 768px) { .mobile-menu-btn { display: block !important; } }`}</style>
 
       <div style={{ display: "flex", gap: "10px" }}>
         <button

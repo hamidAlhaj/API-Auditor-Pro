@@ -23,6 +23,7 @@
   --vuln-low-bg: #d4edda;
   --vuln-low-border: #28a745;
 }
+
 body.dark {
   --bg-body: #121212;
   --sidebar-bg: #1e1e2e;
@@ -37,6 +38,7 @@ body.dark {
   --vuln-medium-bg: #1a2a2a;
   --vuln-low-bg: #1a2a1a;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -45,42 +47,67 @@ body.dark {
     background 0.2s,
     color 0.2s;
 }
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg-body);
   color: var(--text-primary);
+  overflow-x: hidden;
 }
+
+/* ====== Main Layout ====== */
 .container {
   display: flex;
   min-height: 100vh;
 }
+
 .sidebar {
   width: 300px;
   background: var(--sidebar-bg);
   color: var(--sidebar-text);
   padding: 20px;
   position: fixed;
-  height: 100vh;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0; /* تدعم العربي والإنجليزي تلقائياً */
   overflow-y: auto;
-  z-index: 10;
+  z-index: 1000;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
 }
+
+.main {
+  flex: 1;
+  padding: 20px;
+  margin-inline-start: 300px; /* تعطي مساحة للسايدبار حسب اتجاه اللغة */
+  transition: margin 0.3s ease-in-out;
+  width: calc(100% - 300px);
+}
+
+/* ====== Sidebar Content ====== */
 .sidebar h3 {
   margin-top: 20px;
   margin-bottom: 10px;
   color: #e94560;
 }
+
 .sidebar input,
 .sidebar select {
   width: 100%;
   padding: 10px;
   margin: 5px 0;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
   background: #2d2d3a;
+  color: #eee;
   border: none;
+  outline: none;
 }
+
+.sidebar select option {
+  background-color: #2d2d3a;
+  color: #eee;
+}
+
 .sidebar button {
   background: #e94560;
   color: white;
@@ -91,17 +118,16 @@ body {
   width: 100%;
   font-weight: bold;
 }
-.main {
-  margin-right: 300px;
-  flex: 1;
-  padding: 20px;
-}
+
+/* ====== Top Bar & Tabs ====== */
 .top-bar {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px;
   margin-bottom: 20px;
 }
+
 .top-bar button {
   background: var(--btn-secondary-bg);
   color: white;
@@ -109,7 +135,20 @@ body {
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+
+.mobile-menu-btn {
+  display: none !important; /* مخفي في الشاشات الكبيرة */
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  cursor: pointer;
+  padding: 0 !important;
+}
+
 .tabs {
   display: flex;
   gap: 8px;
@@ -117,6 +156,7 @@ body {
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
+
 .tab-btn {
   background: var(--tab-inactive);
   border: none;
@@ -125,24 +165,17 @@ body {
   font-size: 16px;
   border-radius: 12px 12px 0 0;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
 .tab-btn.active {
   background: var(--tab-active);
   color: white;
 }
-.tab-content {
-  animation: fadeIn 0.3s;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
+/* ====== Cards & Inputs ====== */
 .card {
   background: var(--card-bg);
   border-radius: 16px;
@@ -151,12 +184,14 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-color);
 }
+
 .request-builder {
   display: flex;
   gap: 12px;
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
+
 .request-builder select,
 .request-builder input {
   padding: 12px;
@@ -166,6 +201,7 @@ body {
   background: var(--input-bg);
   color: var(--text-primary);
 }
+
 textarea {
   width: 100%;
   font-family: monospace;
@@ -177,6 +213,7 @@ textarea {
   color: var(--text-primary);
   font-size: 14px;
 }
+
 button.send-btn {
   background: var(--btn-secondary-bg);
   color: white;
@@ -186,7 +223,11 @@ button.send-btn {
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
 .response-box {
   background: var(--response-bg);
   color: var(--response-text);
@@ -199,18 +240,22 @@ button.send-btn {
   max-height: 500px;
   overflow-y: auto;
 }
+
+/* ====== Scanner ====== */
 .scanner-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   margin-bottom: 24px;
 }
+
 .scanner-card {
   background: var(--card-bg);
   border-radius: 16px;
   padding: 20px;
   border: 1px solid var(--border-color);
 }
+
 .scanner-card h4 {
   margin-bottom: 15px;
   color: var(--btn-primary-bg);
@@ -218,6 +263,7 @@ button.send-btn {
   border-bottom: 2px solid var(--btn-primary-bg);
   display: inline-block;
 }
+
 .scanner-card input,
 .scanner-card select {
   width: 100%;
@@ -228,29 +274,33 @@ button.send-btn {
   background: var(--input-bg);
   color: var(--text-primary);
 }
+
+/* ====== Vulnerabilities ====== */
 .vuln-card {
-  border-right: 6px solid;
+  border-inline-start: 6px solid; /* يدعم الاتجاهين */
   margin: 16px 0;
   padding: 16px;
   border-radius: 12px;
   background: var(--card-bg);
 }
+
 .vuln-critical {
-  border-right-color: var(--vuln-critical-border);
+  border-inline-start-color: var(--vuln-critical-border);
   background: var(--vuln-critical-bg);
 }
 .vuln-high {
-  border-right-color: var(--vuln-high-border);
+  border-inline-start-color: var(--vuln-high-border);
   background: var(--vuln-high-bg);
 }
 .vuln-medium {
-  border-right-color: var(--vuln-medium-border);
+  border-inline-start-color: var(--vuln-medium-border);
   background: var(--vuln-medium-bg);
 }
 .vuln-low {
-  border-right-color: var(--vuln-low-border);
+  border-inline-start-color: var(--vuln-low-border);
   background: var(--vuln-low-bg);
 }
+
 .history-list {
   max-height: 300px;
   overflow-y: auto;
@@ -258,6 +308,8 @@ button.send-btn {
   border-radius: 12px;
   padding: 12px;
 }
+
+/* ====== Spinner ====== */
 .spinner {
   width: 20px;
   height: 20px;
@@ -266,6 +318,7 @@ button.send-btn {
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -274,84 +327,58 @@ button.send-btn {
     transform: rotate(360deg);
   }
 }
-body.ltr {
-  direction: ltr;
-}
-body.ltr .sidebar {
-  left: 0;
-  right: auto;
-}
-body.ltr .main {
-  margin-right: 0;
-  margin-left: 300px;
-}
-body.ltr .vuln-card {
-  border-right: none;
-  border-left: 6px solid;
-}
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    position: relative;
-    height: auto;
-  }
-  .main {
-    margin-right: 0;
-  }
-  body.ltr .main {
-    margin-left: 0;
-  }
-  .container {
-    flex-direction: column;
-  }
-}
-/* ====== Mobile Responsiveness ====== */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
 
-  /* إخفاء السايدبار افتراضياً في الموبايل */
+/* ========================================= */
+/* ====== MOBILE RESPONSIVENESS ============ */
+/* ========================================= */
+@media (max-width: 768px) {
+  /* إخفاء السايدبار خارج الشاشة */
   .sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
+    transform: translateX(100%); /* إخفاء لليمين (للعربي) */
     width: 280px;
-    transform: translateX(100%); /* مخفي في RTL */
-    transition: transform 0.3s ease-in-out;
-    z-index: 1000;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
   }
 
-  body.ltr .sidebar {
-    left: 0;
-    right: auto;
-    transform: translateX(-100%);
+  html[dir="ltr"] .sidebar {
+    transform: translateX(-100%); /* إخفاء لليسار (للإنجليزي) */
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
   }
 
-  /* إظهار السايدبار عند تفعيل الكلاس */
+  /* إظهار السايدبار عند فتحه */
   .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
   }
 
-  /* تغطية الشاشة بخلفية سوداء عند فتح القائمة */
+  /* الطبقة السوداء الشفافة */
   .sidebar-overlay {
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 999;
-    display: none;
-  }
-  .sidebar-overlay.show {
-    display: block;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
   }
 
+  .sidebar-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* تصفير المارجن في الموبايل */
   .main {
-    margin-right: 0 !important;
-    margin-left: 0 !important;
+    margin-inline-start: 0 !important;
+    width: 100%;
     padding: 15px;
+  }
+
+  /* إظهار زر القائمة */
+  .mobile-menu-btn {
+    display: flex !important;
   }
 
   /* جعل التبويبات قابلة للسحب أفقياً */
